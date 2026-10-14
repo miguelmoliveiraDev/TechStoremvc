@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "TechStoremvc/1.0.0": {
+        "runtime": {
+          "TechStoremvc.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "TechStoremvc/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
