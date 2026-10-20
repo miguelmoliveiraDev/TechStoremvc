@@ -22,7 +22,7 @@ namespace TechStoremvc.Controllers // o ":" significa herança
                 new Produto(1, "Monitor 24 Polegadas", 899.9m, 8),
                 new Produto(1, "Headset Gamer", 179.9m, 15),
             };
-            return View();
+            return View(produtos);
         }
     }
 }
