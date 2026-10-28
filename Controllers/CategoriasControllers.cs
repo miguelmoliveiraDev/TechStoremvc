@@ -1,29 +1,99 @@
 using Microsoft.AspNetCore.Mvc;
 using TechStoremvc.Models;
 
-namespace TechStoremvc.Controllers // o ":" significa herança
-// Herança  = herda as caracteristicas de um controler. :)
-// Conceitos de POO -> Programação Orientada a Objetos
+namespace TechStoremvc.Controllers
 {
     public class CategoriasController : Controller
     {
-        // GET: ProdutosController
+        private readonly CategoriasDB _categoriasDB;
 
-        // Passo 2 - Criar a ação
-        // Uma view depende de uma ação e vice-versa
+        public CategoriasController()
+        {
+            _categoriasDB = new CategoriasDB();
+        }
+
         public ActionResult Index()
         {
-            // passo 4 - objeto
-            //criar um objeto com varios produtos, por isso usamos list
-            List<Categoria> Categorias = new List<Categoria>
-            {
-                new Categoria(1, "Informática", "Computadores e componentes", true),
-                new Categoria(2, "Perifericos", "Mouse, teclado e acessórios", true),
-                new Categoria(3, "Áudio", "Fones, caixas e microfones", true),
-                new Categoria(4, "Monitores", "Telas e monitores", true),
-                new Categoria(5, "Descontinuados", "Categorias fora de uso", false),
-            };
-            return View(Categorias);
+            List<Categoria> categorias = _categoriasDB.Listar();
+            return View(categorias);
         }
-    }                           
+
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            Categoria? categoria = _categoriasDB.buscarPorId(id);
+            if (categoria is null)
+                return NotFound();
+
+            return View(categoria);
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Categoria categoria)
+        {
+            if (!ModelState.IsValid)
+                return View(categoria);
+
+            _categoriasDB.Adicionar(categoria);
+            TempData["Sucesso"] = "Categoria cadastrada com sucesso!";
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            Categoria? categoria = _categoriasDB.buscarPorId(id);
+            if (categoria is null)
+                return NotFound();
+
+            return View(categoria);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Categoria categoria, int id)
+        {
+            if (id != categoria.Id)
+                return BadRequest();
+
+            if (!ModelState.IsValid)
+                return View(categoria);
+
+            bool atualizou = _categoriasDB.Atualizar(categoria);
+            if (!atualizou)
+                return NotFound();
+
+            TempData["Sucesso"] = "Categoria atualizada com sucesso!";
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            Categoria? categoria = _categoriasDB.buscarPorId(id);
+            if (categoria is null)
+                return NotFound();
+                
+            return View(categoria);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            bool excluiu = _categoriasDB.Excluir(id);
+            if (!excluiu)
+                return NotFound();
+
+            TempData["Sucesso"] = "Categoria excluída com sucesso!";
+            return RedirectToAction(nameof(Index));
+        }
+    }
 }

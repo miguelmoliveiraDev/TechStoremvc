@@ -17,9 +17,13 @@ public class Categoria
         )]
     public string Nome { get; set; }
     public string Descricao { get; set; }
-    public bool Ativa { get; set; }
-
     //Metodo construtor -  Define valores iniciais desses atributos acima
+
+    public Categoria()
+    {
+        Nome = "";
+        Descricao = "";
+    }
     public Categoria(
             int id,
             string nome,
@@ -30,6 +34,5 @@ public class Categoria
         Id = id;
         Nome = nome;
         Descricao = descricao;
-        Ativa = ativa;
     }
 }
