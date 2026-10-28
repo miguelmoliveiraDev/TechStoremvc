@@ -1,0 +1,35 @@
+@* Passo 3 - Criar views*@  
+@model TechStoremvc.Models.Produto  
+
+    @{ 
+        ViewData["Title"] = "Produtos";  
+    } 
+
+<h1> 
+    Lista de produtos  
+</h1> 
+
+<dl> 
+    <dt class="col-sm-2">Nome</dt>  
+    <dd class="col-sm-10">@Model.Nome</dd>  
+
+    <dt class="col-sm-2">Preco</dt>  
+    <dd class="col-sm-10">@Model.Preco.ToString(format: "C")</dd>  
+
+    <dt class="col-sm-2">Estoque</dt>  
+    <dd class="col-sm-10">@Model.Estoque</dd>  
+</dl> 
+  
+    <a asp-action="Edit"
+    asp-route-id="@Model.Id"
+    class="btn btn-warning text-info">
+    Editar
+    </a>
+
+    <a asp-action="Index"
+    asp-route-id="@Model.Id"
+    class="btn btn-warning">
+    Voltar
+    </a>
+
+  

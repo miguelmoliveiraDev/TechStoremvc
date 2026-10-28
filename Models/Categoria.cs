@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace TechStoremvc.Models;
 
@@ -8,6 +9,12 @@ public class Categoria
     // Atrbutos
     public int Id { get; set; }  // GET Para obter um id = identificador
                                  // SET para definir um nove valor, atualizar, etc
+    [Required(ErrorMessage ="Informe um nome")]
+    [StringLength(
+        100,
+        MinimumLength = 3,
+        ErrorMessage = "O nome deve possuir entre 3 e 100 caracteres"
+        )]
     public string Nome { get; set; }
     public string Descricao { get; set; }
     public bool Ativa { get; set; }
